@@ -95,7 +95,10 @@ const makeMove = (function(row, column) {
         }
     }
 
-    gameBoard.board[row][column] = activePlayer.marker;
+    if (gameBoard.board[row][column] !== "X" && gameBoard.board[row][column] !== "O") {
+    gameBoard.board[row][column] = activePlayer.marker
+} else {console.log("You can't play there! You wasted your turn!!!")}
+
     updateDOM();
     switchPlayerTurn();
     checkWin();
@@ -155,3 +158,11 @@ const checkWin = function(){
     {winner = "No one";
     winnerAnnounce()}}
 
+const resetButton = document.createElement("button");
+resetButton.innerHTML = "RESET"
+body.appendChild(resetButton);
+
+resetButton.addEventListener("click", () => {
+    gameBoard.board = [["","",""],["","",""],["","",""]];
+    updateDOM();
+})
