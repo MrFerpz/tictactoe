@@ -1,11 +1,11 @@
 // Make it work in the console before messing with the DOM
+
 // Steps:
 // Create an empty board
 // Create a function which takes in a number to select a square
 // Make sure it alternates between O and X markers
 
-// DOM set-up
-
+// Setting up the game board object with empty cells
 const gameBoard = (function() {
     let cell = "";
     let rows = 3;
@@ -21,9 +21,10 @@ const gameBoard = (function() {
     return {board}
 })();
 
+// Body reference
 const body = document.querySelector("body");
 
-// Set up the grid hierarchy
+// Set up the grid hierarchy in the DOM
 const grid = document.createElement("div");
 grid.setAttribute("class", "grid");
 
@@ -58,6 +59,7 @@ grid.appendChild(cell20);
 grid.appendChild(cell21);
 grid.appendChild(cell22);
 
+// Function that updates DOM relating to the content of the game board cells
 function updateDOM() {
     cell00.innerHTML = gameBoard.board[0][0];
     cell01.innerHTML = gameBoard.board[0][1];
@@ -70,8 +72,10 @@ function updateDOM() {
     cell22.innerHTML = gameBoard.board[2][2];
 }
 
+// Initiating to show the empty cells
 updateDOM();
 
+// Setting up different players and their markers
 const players = [
     {
         name: "Player One",
@@ -83,10 +87,13 @@ const players = [
     }
 ];
 
+// Setting the active player to be X
 let activePlayer = players[0];
 
+// Function for making a move, with respect to the row & column of choice
 const makeMove = (function(row, column) {
 
+    // Function that alternates player turns
     const switchPlayerTurn = () => {
         if (activePlayer === players[0]) {
             activePlayer = players[1]
@@ -95,36 +102,31 @@ const makeMove = (function(row, column) {
         }
     }
 
+    // Condition that makes sure the target cell is empty
     if (gameBoard.board[row][column] !== "X" && gameBoard.board[row][column] !== "O") {
+
+        // Updates the board with the active player's marker
     gameBoard.board[row][column] = activePlayer.marker
+
+    // Or, if you chose a target cell already occupied, you waste a go! Brutal!
 } else {console.log("You can't play there! You wasted your turn!!!")}
 
+// Updates the display, alternates player, and checks board against win conditions
     updateDOM();
     switchPlayerTurn();
     checkWin();
     return gameBoard.board;
 })
 
-cell00.addEventListener("click", () => makeMove(0,0))
-cell01.addEventListener("click", () => makeMove(0,1))
-cell02.addEventListener("click", () => makeMove(0,2))
-cell10.addEventListener("click", () => makeMove(1,0))
-cell11.addEventListener("click", () => makeMove(1,1))
-cell12.addEventListener("click", () => makeMove(1,2))
-cell20.addEventListener("click", () => makeMove(2,0))
-cell21.addEventListener("click", () => makeMove(2,1))
-cell22.addEventListener("click", () => makeMove(2,2))
-
-// row 0 [0 1 2]
-// row 1 [0 1 2]
-// row 2 [0 1 2]
-
+// Initiate the winner variable
 let winner;
 
+// Function to announce the winner
 winnerAnnounce = function() {
     console.log(`The winner is ${winner}`)
 }
 
+// Function to compare against various win conditions & if one is met, trigger announcement
 const checkWin = function(){
 
     if ((gameBoard.board[0][0] === "X" && gameBoard.board[0][1] === "X" && gameBoard.board [0][2] === "X") ||
@@ -156,12 +158,27 @@ const checkWin = function(){
     && gameBoard.board[2][0] !== "" && gameBoard.board[2][1] !== "" && gameBoard.board[2][2] !== "")
 
     {winner = "No one";
-    winnerAnnounce()}}
+    winnerAnnounce()}
+}
 
+// Adding click events to trigger makeMove function, which also updates the DOM
+cell00.addEventListener("click", () => makeMove(0,0))
+cell01.addEventListener("click", () => makeMove(0,1))
+cell02.addEventListener("click", () => makeMove(0,2))
+cell10.addEventListener("click", () => makeMove(1,0))
+cell11.addEventListener("click", () => makeMove(1,1))
+cell12.addEventListener("click", () => makeMove(1,2))
+cell20.addEventListener("click", () => makeMove(2,0))
+cell21.addEventListener("click", () => makeMove(2,1))
+cell22.addEventListener("click", () => makeMove(2,2))
+
+
+// Making a reset button
 const resetButton = document.createElement("button");
 resetButton.innerHTML = "RESET"
 body.appendChild(resetButton);
 
+// Adding functionality to reset button
 resetButton.addEventListener("click", () => {
     gameBoard.board = [["","",""],["","",""],["","",""]];
     updateDOM();
