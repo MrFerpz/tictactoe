@@ -4,6 +4,8 @@
 // Create a function which takes in a number to select a square
 // Make sure it alternates between O and X markers
 
+// DOM set-up
+
 const gameBoard = (function() {
     let cell = 0;
     let rows = 3;
@@ -19,6 +21,43 @@ const gameBoard = (function() {
     return {board}
 })();
 
+const body = document.querySelector("body");
+const grid = document.createElement("div");
+const cell00 = document.createElement("div");
+const cell01 = document.createElement("div");
+const cell02 = document.createElement("div");
+const cell10 = document.createElement("div");
+const cell11 = document.createElement("div");
+const cell12 = document.createElement("div");
+const cell20 = document.createElement("div");
+const cell21 = document.createElement("div");
+const cell22 = document.createElement("div");
+
+body.appendChild(grid);
+grid.appendChild(cell00);
+grid.appendChild(cell01);
+grid.appendChild(cell02);
+grid.appendChild(cell10);
+grid.appendChild(cell11);
+grid.appendChild(cell12);
+grid.appendChild(cell20);
+grid.appendChild(cell21);
+grid.appendChild(cell22);
+
+function updateDOM() {
+    cell00.innerHTML = gameBoard.board[0][0];
+    cell01.innerHTML = gameBoard.board[0][1];
+    cell02.innerHTML = gameBoard.board[0][2];
+    cell10.innerHTML = gameBoard.board[1][0];
+    cell11.innerHTML = gameBoard.board[1][1];
+    cell12.innerHTML = gameBoard.board[1][2];
+    cell20.innerHTML = gameBoard.board[2][0];
+    cell21.innerHTML = gameBoard.board[2][1];
+    cell22.innerHTML = gameBoard.board[2][2];
+}
+
+updateDOM();
+
 const players = [
     {
         name: "Player One",
@@ -32,16 +71,6 @@ const players = [
 
 let activePlayer = players[0];
 
-// const O = (function() {
-//     let marker = "O";
-//     return {marker}}
-// )();
-
-// const X = (function() {
-//     let marker = "X";
-//     return {marker}}
-// )();
-
 const makeMove = (function(row, column) {
 
     const switchPlayerTurn = () => {
@@ -53,8 +82,9 @@ const makeMove = (function(row, column) {
     }
 
     gameBoard.board[row][column] = activePlayer.marker;
+    updateDOM();
     switchPlayerTurn();
-    checkWin()
+    checkWin();
     return gameBoard.board;
 })
 
@@ -100,3 +130,4 @@ const checkWin = function(){
 
     {winner = "No one";
     winnerAnnounce()}}
+
