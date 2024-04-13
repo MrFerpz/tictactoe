@@ -19,18 +19,42 @@ const gameBoard = (function() {
     return {board}
 })();
 
-const O = (function() {
-    let marker = "O";
-    return {marker}}
-)();
+const players = [
+    {
+        name: "Player One",
+        marker: "X"
+    },
+    {
+        name: "Player Two",
+        marker: "O"
+    }
+];
 
-const X = (function() {
-    let marker = "X";
-    return {marker}}
-)();
+let activePlayer = players[0];
 
-const makeMove = (function(player, row, column) {
-    gameBoard.board[row][column] = player.marker;
+// const O = (function() {
+//     let marker = "O";
+//     return {marker}}
+// )();
+
+// const X = (function() {
+//     let marker = "X";
+//     return {marker}}
+// )();
+
+const makeMove = (function(row, column) {
+
+    const switchPlayerTurn = () => {
+        if (activePlayer === players[0]) {
+            activePlayer = players[1]
+        } else if (activePlayer === players[1]) {
+            activePlayer === players[0]
+        }
+    }
+
+    gameBoard.board[row][column] = activePlayer.marker;
+    switchPlayerTurn();
+
     return gameBoard.board;
 })
 
