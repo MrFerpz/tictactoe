@@ -7,7 +7,7 @@
 // DOM set-up
 
 const gameBoard = (function() {
-    let cell = 0;
+    let cell = "";
     let rows = 3;
     let columns = 3;
     let board = [];
@@ -22,7 +22,11 @@ const gameBoard = (function() {
 })();
 
 const body = document.querySelector("body");
+
+// Set up the grid hierarchy
 const grid = document.createElement("div");
+grid.setAttribute("class", "grid");
+
 const cell00 = document.createElement("div");
 const cell01 = document.createElement("div");
 const cell02 = document.createElement("div");
@@ -32,6 +36,16 @@ const cell12 = document.createElement("div");
 const cell20 = document.createElement("div");
 const cell21 = document.createElement("div");
 const cell22 = document.createElement("div");
+
+cell00.setAttribute("class", "cell");
+cell01.setAttribute("class", "cell");
+cell02.setAttribute("class", "cell");
+cell10.setAttribute("class", "cell");
+cell11.setAttribute("class", "cell");
+cell12.setAttribute("class", "cell");
+cell20.setAttribute("class", "cell");
+cell21.setAttribute("class", "cell");
+cell22.setAttribute("class", "cell");
 
 body.appendChild(grid);
 grid.appendChild(cell00);
@@ -88,6 +102,16 @@ const makeMove = (function(row, column) {
     return gameBoard.board;
 })
 
+cell00.addEventListener("click", () => makeMove(0,0))
+cell01.addEventListener("click", () => makeMove(0,1))
+cell02.addEventListener("click", () => makeMove(0,2))
+cell10.addEventListener("click", () => makeMove(1,0))
+cell11.addEventListener("click", () => makeMove(1,1))
+cell12.addEventListener("click", () => makeMove(1,2))
+cell20.addEventListener("click", () => makeMove(2,0))
+cell21.addEventListener("click", () => makeMove(2,1))
+cell22.addEventListener("click", () => makeMove(2,2))
+
 // row 0 [0 1 2]
 // row 1 [0 1 2]
 // row 2 [0 1 2]
@@ -124,9 +148,9 @@ const checkWin = function(){
     { winner = players[1].name; 
     winnerAnnounce()
 
-    } else if (gameBoard.board[0][0] !== 0 && gameBoard.board[0][1] !== 0 && gameBoard.board[0][2] !== 0
-    && gameBoard.board[1][0] !== 0 && gameBoard.board[1][1] !== 0 && gameBoard.board[1][2] !== 0
-    && gameBoard.board[2][0] !== 0 && gameBoard.board[2][1] !== 0 && gameBoard.board[2][2] !== 0)
+    } else if (gameBoard.board[0][0] !== "" && gameBoard.board[0][1] !== "" && gameBoard.board[0][2] !== ""
+    && gameBoard.board[1][0] !== "" && gameBoard.board[1][1] !== "" && gameBoard.board[1][2] !== ""
+    && gameBoard.board[2][0] !== "" && gameBoard.board[2][1] !== "" && gameBoard.board[2][2] !== "")
 
     {winner = "No one";
     winnerAnnounce()}}
