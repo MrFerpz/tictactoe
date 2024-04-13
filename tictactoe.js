@@ -5,21 +5,74 @@
 // Make sure it alternates between O and X markers
 
 const gameBoard = (function() {
-    let board = [" ", " "," "," "," "," "," "," "," "];
+    let cell = 0;
+    let rows = 3;
+    let columns = 3;
+    let board = [];
+
+    for (i = 0; i < rows; i++) {
+        board[i] = [];
+        for (j = 0; j < columns; j++) {
+            board[i].push(cell);
+        }
+    }
     return {board}
 })();
 
-const playerO = (function() {
+const O = (function() {
     let marker = "O";
-    return {marker}
-})();
+    return {marker}}
+)();
 
-const playerX = (function() {
+const X = (function() {
     let marker = "X";
-    return {marker}
-})();
+    return {marker}}
+)();
 
-const makeMove = (function(player, number) {
-    gameBoard.board[number] = player.marker;
+const makeMove = (function(player, row, column) {
+    gameBoard.board[row][column] = player.marker;
     return gameBoard.board;
 })
+
+// row 0 [0 1 2]
+// row 1 [0 1 2]
+// row 2 [0 1 2]
+
+let winner;
+
+winnerAnnounce = function() {
+    console.log(`The winner is ${winner}`)
+}
+
+const gameController = function(){
+
+if ((gameBoard.board[0][0] === "X" && gameBoard.board[0][1] === "X" && gameBoard.board [0][2] === "X") ||
+(gameBoard.board[1][0] === "X" && gameBoard.board[1][1] === "X" && gameBoard.board [1][2] === "X") ||
+(gameBoard.board[2][0] === "X" && gameBoard.board[2][1] === "X" && gameBoard.board [2][2] === "X") ||
+(gameBoard.board[0][0] === "X" && gameBoard.board[1][0] === "X" && gameBoard.board [2][0] === "X") ||
+(gameBoard.board[0][1] === "X" && gameBoard.board[1][1] === "X" && gameBoard.board [1][2] === "X") ||
+(gameBoard.board[0][2] === "X" && gameBoard.board[1][2] === "X" && gameBoard.board [2][2] === "X") ||
+(gameBoard.board[0][0] === "X" && gameBoard.board[1][1] === "X" && gameBoard.board [2][2] === "X") ||
+(gameBoard.board[2][0] === "X" && gameBoard.board[1][1] === "X" && gameBoard.board [0][2] === "X")) {
+
+    winner = X.marker;
+    winnerAnnounce()
+
+} else if ((gameBoard.board[0][0] === "O" && gameBoard.board[0][1] === "O" && gameBoard.board [0][2] === "O") ||
+(gameBoard.board[1][0] === "O" && gameBoard.board[1][1] === "O" && gameBoard.board [1][2] === "O") ||
+(gameBoard.board[2][0] === "O" && gameBoard.board[2][1] === "O" && gameBoard.board [2][2] === "O") ||
+(gameBoard.board[0][0] === "O" && gameBoard.board[1][0] === "O" && gameBoard.board [2][0] === "O") ||
+(gameBoard.board[0][1] === "O" && gameBoard.board[1][1] === "O" && gameBoard.board [1][2] === "O") ||
+(gameBoard.board[0][2] === "O" && gameBoard.board[1][2] === "O" && gameBoard.board [2][2] === "O") ||
+(gameBoard.board[0][0] === "O" && gameBoard.board[1][1] === "O" && gameBoard.board [2][2] === "O") ||
+(gameBoard.board[2][0] === "O" && gameBoard.board[1][1] === "O" && gameBoard.board [0][2] === "O")) 
+
+ { winner = O.marker; 
+ winnerAnnounce()
+
+ } else if (gameBoard.board[0][0] !== 0 && gameBoard.board[0][1] !== 0 && gameBoard.board[0][2] !== 0
+&& gameBoard.board[1][0] !== 0 && gameBoard.board[1][1] !== 0 && gameBoard.board[1][2] !== 0
+&& gameBoard.board[2][0] !== 0 && gameBoard.board[2][1] !== 0 && gameBoard.board[2][2] !== 0)
+
+{winner = "No one";
+winnerAnnounce()}}
